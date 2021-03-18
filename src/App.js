@@ -1,25 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import axios from "axios";
+
+const options = {
+  method: 'GET',
+  url: 'https://theaudiodb.p.rapidapi.com/mvid.php',
+  params: {i: '112024'},
+  headers: {
+    'x-rapidapi-key': '95f1fb94d7mshe7816815b93cc4ap197e2fjsn4b824aff24ce',
+    'x-rapidapi-host': 'theaudiodb.p.rapidapi.com'
+  }
+};
 
 function App() {
+  axios
+    .request(options)
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>Hello</h1>
+    </>
   );
 }
 
