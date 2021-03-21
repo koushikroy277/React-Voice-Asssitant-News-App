@@ -1,29 +1,32 @@
 import React from "react";
-import "./App.css";
-import axios from "axios";
+import "./App.scss";
+import alanBtn from "@alan-ai/alan-sdk-web";
+import News from "./News/News";
+import alanAi from "./assets/alanHead.jpeg";
 
-const options = {
-  method: 'GET',
-  url: 'https://theaudiodb.p.rapidapi.com/mvid.php',
-  params: {i: '112024'},
-  headers: {
-    'x-rapidapi-key': '95f1fb94d7mshe7816815b93cc4ap197e2fjsn4b824aff24ce',
-    'x-rapidapi-host': 'theaudiodb.p.rapidapi.com'
-  }
-};
+const alanKey =
+  "a37bdabb642d531656e030bf705fbf432e956eca572e1d8b807a3e2338fdd0dc/stage";
 
 function App() {
-  axios
-    .request(options)
-    .then(function (response) {
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      console.error(error);
+  const [newsData, setNewsData] = React.useState([]);
+
+  React.useEffect(() => {
+    alanBtn({
+      key: alanKey,
+      onCommand: ({ command, articles }) => {
+        if (command === "newsHeadline") {
+          setNewsData(articles);
+        }
+      },
     });
+  }, []);
+
   return (
     <>
-      <h1>Hello</h1>
+      <div className="alanImg">
+        <img src={alanAi} alt="" />
+      </div>
+      <News articles={newsData} />
     </>
   );
 }
